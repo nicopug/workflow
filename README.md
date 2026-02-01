@@ -6,5 +6,5 @@
 [t5xxl_fp8_e4m3fn.safetensors](https://huggingface.co/comfyanonymous/flux_text_encoders/blob/main/t5xxl_fp8_e4m3fn.safetensors)
 [clip_l.safetensors](https://huggingface.co/comfyanonymous/flux_text_encoders/blob/main/clip_l.safetensors)
 [ae.safetensors](https://huggingface.co/mrhendrey/Florence-2-large-ft-safetensors/blob/main/model.safetensors)
-[iclight_sd15_fc.safetensors](ttps://huggingface.co/lllyasviel/ic-light/blob/main/iclight_sd15_fc.safetensors)
+[iclight_sd15_fc.safetensors](https://huggingface.co/lllyasviel/ic-light/blob/main/iclight_sd15_fc.safetensors)
 [florence-2-large-ft.safetensors](https://huggingface.co/mrhendrey/Florence-2-large-ft-safetensors/blob/main/model.safetensors)
