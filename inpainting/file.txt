@@ -1,0 +1,6 @@
+COSA INSTALLARE (Tramite ComfyUI Manager):
+
+Nodes: ComfyUI-GGUF (Autore: City96)
+Modelli (da scaricare e mettere in /models/unet): flux1-fill-dev-Q8_0.gguf
+Clip (da mettere in /models/clip): t5xxl_fp8_e4m3fn.safetensors e clip_l.safetensors
+VAE: ae.safetensors (quello di Flux)

@@ -1,0 +1,15 @@
+Cosa devi installare (ComfyUI Manager)
+
+1. ComfyUI-GGUF (per caricare il modello Flux leggero).
+2. ComfyUI-IC-Light (Assicurati di avere la versione che supporta Flux).
+3. Modelli da scaricare:
+    - flux1-dev-Q8_0.gguf (in /models/unet)
+    - ic-light-flux-test.safetensors (in /models/ic_light o /models/unet a seconda della tua installazione)
+    - ae.safetensors (il VAE di Flux)
+    - t5xxl_fp8_e4m3fn.safetensors e clip_l.safetensors (in /models/clip)
+
+Istruzioni d'uso
+1. Carica la foto del soggetto nel nodo "SOGGETTO (Input)".
+2. Carica una mappa di luce (es. un gradiente bianco/nero o una foto di un tramonto) nel nodo "RIFERIMENTO LUCE (Light Map)".
+3. Scrivi nel prompt il tipo di luce (es. "soft cinematic lighting, neon red rim light from right").
+4. Premi Queue.

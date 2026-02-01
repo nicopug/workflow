@@ -1,0 +1,14 @@
+Cosa devi installare (ComfyUI Manager)
+
+1. ComfyUI-PuLID-Flux (fondamentale, è il nodo che gestisce l'iniezione dell'identità).
+2. ComfyUI-GGUF (per caricare Flux in versione leggera).
+3. Modelli da scaricare:
+    - flux1-dev-Q8_0.gguf (in /models/unet).
+    - pulid_flux_v0.9.0.safetensors (crea la cartella /models/pulid se non esiste).
+    - Eva_Clip.safetensors (in /models/clip - serve a PuLID per "vedere" la faccia).
+    - antelopev2 (i modelli per InsightFace, vanno in /models/insightface).
+
+Istruzioni d'uso
+1. Carica la foto del volto di riferimento nel nodo "FOTO IDENTITÀ (Reference)".
+2. Imposta il Weight nel nodo PuLID (0.8 è realistico, 1.0 è copia esatta ma rigida).
+3. Scrivi il prompt descrivendo la scena, non la persona (es. "a cinematic portrait of a cyberpunk soldier, neon lights"). L'identità verrà sovrascritta automaticamente.

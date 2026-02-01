@@ -1,0 +1,16 @@
+Cosa devi installare (ComfyUI Manager)
+
+1. ComfyUI-Florence2: Il cervello visivo che analizza la foto.
+2. ComfyUI-GGUF: Per caricare Flux Q8 sulla tua 4070.
+3. ComfyUI-Custom-Scripts: Per la gestione delle stringhe di testo.
+4. Modelli da scaricare:
+    - flux1-dev-Q8_0.gguf (in /models/unet).
+    - florence2-large-ft.safetensors (va in /models/florence2).
+    - ae.safetensors (VAE di Flux).
+    - t5xxl_fp8_e4m3fn.safetensors e clip_l.safetensors.
+
+Istruzioni d'uso
+- Carica l'immagine (es. la montagna) nel nodo "FOTO DA ANALIZZARE".
+- Nel nodo "AGGIUNTA MANUALE", scrivi semplicemente dramatic cumulus clouds.
+- Florence-2 analizzerà la foto e genererà una descrizione come: "Alpine mountain peak under bright sunlight, pine trees in foreground".
+- Il workflow unirà i testi e darà a Flux il prompt finale: "Alpine mountain peak under bright sunlight, pine trees in foreground, dramatic cumulus clouds, cinematic photography, 8k".

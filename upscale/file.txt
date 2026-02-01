@@ -1,0 +1,15 @@
+Cosa devi installare (ComfyUI Manager)
+
+1. ComfyUI-GGUF (per il modello Flux leggero).
+2. ComfyUI-ControlNet (Standard, ma aggiornato).
+3. Modelli da scaricare:
+    - flux1-dev-Q8_0.gguf (in /models/unet).
+    - Flux_Led_CN_Tile.safetensors (o qualsiasi ControlNet Tile per Flux, in /models/controlnet).
+    - ae.safetensors (VAE).
+    - t5xxl_fp8_e4m3fn.safetensors e clip_l.safetensors.
+
+Istruzioni d'uso
+- Carica la tua immagine piccola/sfocata nel nodo "IMMAGINE LOW-RES".
+- Imposta il fattore di ingrandimento nel nodo "Upscale Factor" (es. 2.0 per raddoppiare, 4.0 per quadruplicare).
+- Nel prompt scrivi solo parole che descrivono la texture e la qualità (es. "highly detailed, 8k, photorealistic, sharp focus, raw photo"). Non serve descrivere il soggetto.
+- Denoise: È impostato a 0.35. Se vuoi che l'AI inventi più dettagli (rischiando di cambiare il viso), alzalo a 0.45. Se vuoi essere più fedele all'originale, abbassalo a 0.25.
