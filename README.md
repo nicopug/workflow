@@ -43,6 +43,68 @@ L'integrazione di un modello Vision (Florence-2 Large) permette al workflow di "
 *   **Accessibilità e Catalogazione:** Generazione automatica di metadati descrittivi e versioning creativo per database fotografici.
 *   **Art Direction assistita:** Creazione di varianti di un'idea originale dove l'AI suggerisce miglioramenti basandosi sulla teoria del colore e della composizione rilevata nell'input.
 
+---
+
+## Settaggi Tecnici dei Workflow
+
+#### 1. God-Mode Inpainter (Flux Fill)
+*   **Steps:** 25-30.
+*   **Guidance (Distilled):** 3.5.
+*   **Sampler:** Euler.
+*   **Scheduler:** Simple o Beta.
+*   **Denoise:** **1.0**. (Fondamentale: deve essere massimo per permettere al modello Fill di ricostruire l'area mascherata).
+*   **Mask Blur:** 8-12 pixel (per ammorbidire la transizione tra l'originale e le nuove nuvole).
+
+#### 2. Clonatore d'Identità 2.0 (PuLID Flux)
+*   **PuLID Weight:** 0.85 (valore bilanciato tra somiglianza e realismo).
+*   **Method:** Fidelity (per la massima precisione dei tratti).
+*   **Steps:** 20.
+*   **Guidance:** 3.0.
+*   **Denoise (se i2i):** 0.45.
+
+#### 3. Studio Luci "Native" (Flux IC-Light)
+*   **Guidance:** 1.5 - 2.0 (mantenere basso questo valore permette alla luce della Light Map di influenzare maggiormente il soggetto).
+*   **Denoise:** 1.0.
+*   **Light Map Strength:** 0.7.
+*   **Steps:** 25.
+
+#### 4. Restauratore Forense (Tiled Flux Upscale)
+*   **Denoise:** **0.35** (il "punto magico" dove l'AI inventa pori della pelle e texture senza cambiare i lineamenti).
+*   **ControlNet Strength (Tile):** 0.4 - 0.6.
+*   **Tile Size:** 1024x1024 (Flux gestisce aree ampie meglio dei vecchi modelli).
+*   **Steps:** 28.
+
+#### 5. L'Agente Creativo Vision (Florence-2 + Flux)
+*   **Florence-2 Task:** `detailed_caption` o `more_detailed_caption`.
+*   **Denoise:** 0.50 (per dare all'AI abbastanza libertà di seguire le nuove istruzioni del prompt).
+*   **Guidance:** 3.5.
+*   **Steps:** 20.
+
+---
+
+### Risoluzione Errore "Output = Input"
+
+Se in un workflow fornisci un'immagine in input e ottieni un risultato identico o quasi impercettibilmente diverso, le cause tecniche sono tre:
+
+#### 1. Il Valore di Denoise (Saturazione del Rumore)
+È la causa nel 90% dei casi. Il parametro **Denoise** (o *Denoising Strength*) controlla quanta parte dell'immagine originale deve essere distrutta e ricostruita dall'AI.
+*   **Valore 0.0:** L'AI non tocca nulla. L'output è identico all'input.
+*   **Valore 0.1 - 0.3:** L'AI apporta solo modifiche microscopiche ai colori o alla grana.
+*   **Risoluzione:** Alza il Denoise a **1.0** se vuoi aggiungere elementi nuovi (come le nuvole) o a **0.4 - 0.6** se vuoi fare un restyle (cambio abiti o stile).
+
+#### 2. Forza del ControlNet (Lock dei Pixel)
+Se stai usando un ControlNet (Canny, Depth o Tile) impostato con **Strength a 1.0** e un'impostazione di controllo "High Fidelity" o "My prompt is more important", stai costringendo l'AI a ricalcare esattamente ogni singolo pixel della foto originale.
+*   **Risoluzione:** Abbassa la **Strength** del ControlNet a **0.4 - 0.6**. In questo modo l'AI seguirà la forma generale ma avrà il permesso di modificare i dettagli.
+
+#### 3. Errore di Collegamento Latent (Workflow logic)
+Se il nodo `KSampler` riceve il latent da un nodo `VAEEncode` ma non è collegato correttamente alla maschera (Inpainting), l'AI potrebbe ignorare le istruzioni se il denoise non è settato su un campionatore che supporta l'inizializzazione forzata.
+*   **Risoluzione:** Assicurati che l'immagine passi attraverso un nodo `SetLatentNoiseMask` prima di entrare nel `KSampler`.
+
+### Esempio di Prompt Professionale per Test (Flux 2026)
+Usa questo prompt per testare se i tuoi settaggi funzionano:
+`"high-end studio photography, extreme macro texture, detailed skin pores, cinematic volumetric lighting, 8k raw photo, sharp focus on eyes"`
+Se con un **Denoise a 0.7** l'immagine non cambia drasticamente texture, significa che uno dei tuoi ControlNet è troppo forte o il Denoise è bloccato a zero.
+
 
 
 [flux1-dev-Q8_0.gguf](https://huggingface.co/city96/FLUX.1-dev-gguf/blob/main/flux1-dev-Q8_0.gguf)
